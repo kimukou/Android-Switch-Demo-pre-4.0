@@ -16,6 +16,7 @@
 package com.appscumen.example;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -30,19 +31,18 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.widget.CompoundButton;
-import android.graphics.drawable.ColorDrawable;
 
 
 /**
@@ -163,12 +163,15 @@ public class MySwitch extends CompoundButton {
      * @param defStyle An attribute ID within the active theme containing a reference to the
      *                 default style for this widget. e.g. android.R.attr.switchStyle.
      */
-    public MySwitch(Context context, AttributeSet attrs, int defStyle) {
+	public MySwitch(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         Resources res = getResources();
-        mTextPaint.density = res.getDisplayMetrics().density;
+		if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR){
+			float density = res.getDisplayMetrics().density;
+			MySwitchHelper.setTextPaintDensity(mTextPaint, density);
+		}
         mTextPaint.setShadowLayer(0.5f, 1.0f, 1.0f, Color.BLACK);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
@@ -488,7 +491,7 @@ public class MySwitch extends CompoundButton {
     }
 
     
-    @Override
+	@Override
     public boolean onTouchEvent(MotionEvent ev) {
     	//if (fixed) {
     		//Log.d(TAG, "the switch position is fixed to " + (onOrOff ? "On":"Off") + "position.");
@@ -497,7 +500,14 @@ public class MySwitch extends CompoundButton {
         mVelocityTracker.addMovement(ev);
         //Log.d(TAG, "onTouchEvent(ev="+ev.toString()+")");
         //Log.d(TAG, "mTouchMode="+mTouchMode);
-        final int action = ev.getActionMasked();
+        int action = 0;
+		if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO){
+	        action = MySwitchHelper.getAction(ev);
+		}
+		else{
+			action = ev.getAction();
+		}
+
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 final float x = ev.getX();
@@ -730,7 +740,8 @@ public class MySwitch extends CompoundButton {
         mThumbPosition = lc ? getThumbScrollRange() : 0;
         invalidate();
     }
-    protected void onLayout_orig(boolean changed, int left, int top, int right, int bottom) {
+    @SuppressLint("WrongCall")
+	protected void onLayout_orig(boolean changed, int left, int top, int right, int bottom) {
 		//Log.d(TAG, "left=" + left + ",top="+top+",right="+right+",bottom="+bottom);
         super.onLayout(changed, left, top, right, bottom);
 

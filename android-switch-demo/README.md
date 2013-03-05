@@ -6,3 +6,11 @@ http://stackoverflow.com/questions/9752760/slide-toggle-for-android
 
 
 ![Screenshot] (https://raw.github.com/pellucide/Android-Switch-Demo-pre-4.0/master/android-switch-demo/Screenshot.png)
+
+----
+
+update API-4 support
+
+but not all demo on layout/main_v4.xml
+
+check is IS01

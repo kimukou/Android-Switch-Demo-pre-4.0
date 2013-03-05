@@ -176,7 +176,8 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" > 
     
-           <com.appscumen.example.MySwitch
+<!-- 
+        <com.appscumen.example.MySwitch
                     style="@style/mySwitchStyle"
                     android:id="@+id/pickup2"
                     android:layout_gravity="center"
@@ -196,7 +197,6 @@
                     mySwitch:textOn="Girl"
                     mySwitch:textOff="Boy" 
                     /> 
-<!-- 
            <com.appscumen.example.MySwitch
                     style="@style/mySwitchStyle"
                     android:id="@+id/pickup2"

@@ -301,8 +301,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int monospace=0x7f040007;
         public static final int normal=0x7f040002;
         public static final int pickup2=0x7f040010;
-        public static final int pickup3=0x7f040011;
-        public static final int pickup5=0x7f040012;
         public static final int sans=0x7f040005;
         public static final int serif=0x7f040006;
         public static final int switch1=0x7f040008;
@@ -315,6 +313,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int main_v4=0x7f030001;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

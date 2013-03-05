@@ -3,6 +3,7 @@ package com.appscumen.example;
 import com.appscumen.example.MySwitch.OnChangeAttemptListener;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -16,7 +17,14 @@ public class AndroidSwitchDemoActivity extends Activity implements OnChangeAttem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        
+		if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ECLAIR){
+	        setContentView(R.layout.main);
+		}
+		else{
+	        setContentView(R.layout.main_v4);
+		}
+        
         slideToUnLock = (MySwitch)findViewById(R.id.switch3);
         publishToggle = (MySwitch)findViewById(R.id.switch4);
         yes = (TextView)findViewById(R.id.Yes);
